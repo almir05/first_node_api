@@ -27,19 +27,9 @@ module.exports = {
   },
 
   createUser(req, res) {
-    let body = ''
+    const { body } = req
 
-    req.on('data', chunk => {
-      body += chunk
-    })
-    //adiciona ao body os dados recebidos
-
-    req.on('end', () => {
-      body = JSON.parse(body)
-      //Quando receber o último pedaço da mensagem, converte a string
-      //em um objeto Javascript
-
-      const lastUserId = users[users.length - 1].id
+    const lastUserId = users[users.length - 1].id
       const newUser = {
         id: lastUserId + 1,
         name: body.name
@@ -48,6 +38,5 @@ module.exports = {
       users.push(newUser)
 
       res.send(200, newUser)
-    })
-  }
+  },
 }
